@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="procrastNation">
 <head>
     <meta charset="UTF-8">
     <title>ProcrastNATION</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link href="main.css" rel="stylesheet">
 </head>
-<body>
-<h1>Welcome to our MadHacks 2017 project!</h1>
-<script src="./node_modules/angular/angular.min.js"></script>
-<script src="./node_modules/firebase/firebase.js"></script>
-<script src="./node_modules/angularfire/dist/angularfire.min.js"></script>
-<script src="./node_modules/moment/moment.js"></script>
-<script src="./node_modules/angular-material/angular-material.min.js"></script>
+<body ng-controller="procrastNationController as procrastCtrl" ng-cloak>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="node_modules/firebase/firebase.js"></script>
+<script src="node_modules/angularfire/dist/angularfire.min.js"></script>
+<script src="node_modules/moment/moment.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 <script src="firebase-credentials.js"></script>
 <script src="main.js"></script>
 </body>
