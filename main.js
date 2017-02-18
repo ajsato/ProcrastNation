@@ -4,9 +4,20 @@
     var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'googlechart']);
 
     app.controller('procrastNationController',
-        ["$firebaseArray", function ($firebaseArray) {
+        ["$firebaseArray", "$firebaseAuth", function ($firebaseArray, $firebaseAuth) {
 
             var self = this;
+
+            var firebaseUser = null;
+            var auth = $firebaseAuth();
+
+            auth.$signInWithPopup("google").then(function (result) {
+                console.log("Signed in as:", result.user.uid);
+            }).catch(function (error) {
+                console.error("Authentication failed:", error);
+            });
+
+
             //Create the recent activities
             self.activities = [{
                 what: "Activity 1",
