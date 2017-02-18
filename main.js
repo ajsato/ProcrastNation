@@ -1,7 +1,7 @@
 (function () {
     firebase.initializeApp(config);
 
-    var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'nvd3']);
+    var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'googlechart']);
 
     app.controller('procrastNationController',
         ["$firebaseArray", function ($firebaseArray) {
