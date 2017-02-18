@@ -1,0 +1,24 @@
+{
+  "name": "procrast-nation",
+  "version": "0.1.0",
+  "description": "MadHacks 2017 project",
+  "main": "main.js",
+  "dependencies": {
+    "angular": "^1.6.2",
+    "firebase": "^3.6.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajsato/ProcrastNation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajsato/ProcrastNation/issues"
+  },
+  "homepage": "https://github.com/ajsato/ProcrastNation#readme"
+}
