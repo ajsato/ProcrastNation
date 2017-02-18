@@ -1,0 +1,3 @@
+(function () {
+    firebase.initializeApp(config);
+})();
