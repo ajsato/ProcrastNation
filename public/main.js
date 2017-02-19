@@ -11,6 +11,7 @@
         this.duration = duration;
     }
 
+    //
     app.filter('fromNow', function () {
         return function (input) {
             return moment(parseInt(input)).fromNow();
@@ -55,11 +56,14 @@
                             });
                         } else {
                             var days = [];
+                            var startDate = Date.now();
+                            var endDate = startDate.subtract(7, 'days');
+                            for (var h = 0; h < 7; h++){
+                                days[moment(startDate.add(h, 'days')).format()] = 0;
+                            }
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
-                                if (!days[moment(self.firebaseUser.activities[i]).format()]) {
-                                    days[moment(self.firebaseUser.activities[i]).format()] = 0;
-                                }
-                                else {
+                                if ((startDate < days[moment(self.firebaseUser.activities[i])]) &&
+                                    (endDate > days[moment(self.firebaseUser.activities[i])])) {
                                     days[moment(self.firebaseUser.activities[i]).format()]++;
                                 }
                             }
