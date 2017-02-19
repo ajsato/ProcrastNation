@@ -2,45 +2,58 @@
 <html lang="en" ng-app="procrastNation">
 <head>
     <meta charset="UTF-8">
-    <title>ProcrastNATION</title>
+    <title>ProcrastNation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link href="main.css" rel="stylesheet">
 </head>
 <body ng-controller="procrastNationController as procrastCtrl" ng-cloak>
-<md-card>
-    <md-input-container class="md-icon-float md-block">
-        <!-- Use floating label instead of placeholder -->
-        <label>Name of activity</label>
-        <input ng-model="procrastCtrl.activity.title" type="text">
-    </md-input-container>
-    <md-input-container class="md-icon-float md-block">
-        <!-- Use floating label instead of placeholder -->
-        <label>Description</label>
-        <input ng-model="procrastCtrl.activity.message" type="text">
-    </md-input-container>
-    <md-input-container class="md-icon-float md-block">
-        <!-- Use floating label instead of placeholder -->
-        <label>Rating</label>
-        <input ng-model="procrastCtrl.activity.rating" type="text">
-    </md-input-container>
-    <md-button class="md-raised md-primary" ng-click="procrastCtrl.addActivity()">Save</md-button>
-</md-card>
-
-
-<md-card md-theme="default" md-theme-watch="">
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-headline">Daily Progress</span>
-        </md-card-title-text>
-    </md-card-title>
-    <md-card-content>
-        <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
-    </md-card-content>
-</md-card>
-<md-content>
+<md-toolbar layout="row" layout-align="space-between center">
+    <div class="md-toolbar-tools main-col">
+        <h3>
+            <span>Procrast<b>Nation</b></span>
+        </h3>
+        <span flex></span>
+        <md-button aria-label="Leaderboard">
+            Leaderboard
+        </md-button>
+    </div>
+</md-toolbar>
+<div class="main-col">
     <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Add Activity</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <md-input-container class="md-icon-float md-block">
+                <label>Name of activity</label>
+                <input ng-model="procrastCtrl.activity.title" type="text">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+                <label>Description</label>
+                <input ng-model="procrastCtrl.activity.message" type="text">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+                <label>Rating</label>
+                <input ng-model="procrastCtrl.activity.rating" type="text">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="procrastCtrl.addActivity()">Save</md-button>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Daily Progress</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
+        </md-card-content>
+    </md-card>
+    <md-card ng-show="procrastCtrl.activities.length > 0">
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">Recent Activity</span>
@@ -51,9 +64,8 @@
                 <md-list-item class="md-3-line"
                               ng-repeat="activity in procrastCtrl.activities | orderBy: 'timestamp': true | limitTo: 5">
                     <div class="md-list-item-text">
-                        <h3>{{activity.title}} ({{activity.duration}} mins)</h3>
+                        <h3>{{activity.title}} ({{activity.duration}} mins - {{activity.rating}} stars)</h3>
                         <h4>{{activity.message}}</h4>
-                        <p>{{activity.rating}}</p>
                         <p>{{activity.timestamp | fromNow}}</p>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
@@ -61,7 +73,7 @@
             </md-list>
         </md-card-content>
     </md-card>
-</md-content>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script src="node_modules/firebase/firebase.js"></script>
 <script src="node_modules/angularfire/dist/angularfire.min.js"></script>

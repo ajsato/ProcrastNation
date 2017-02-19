@@ -69,9 +69,7 @@
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
                                 if ((startDate < days[moment(self.firebaseUser.activities[i])]) &&
                                     (endDate > days[moment(self.firebaseUser.activities[i])])) {
-
                                     days[moment(self.firebaseUser.activities[i]).format()]++;
-
                                 }
                             }
                             var daysFormatted = [];
@@ -104,7 +102,7 @@
                     self.activity.message = "";
                     self.activity.rating = "";
                 };
-  //  debugger;
+
                 this.dailyActivity = {};
                 this.dailyActivity.type = "google.charts.Bar";
                 this.dailyActivity.displayed = false;
@@ -126,7 +124,6 @@
                             }]}
                         ]//*/
                 };
-              //  debugger;
                 this.dailyActivity.options = {
                     "title": "Daily Activity",
                     "isStacked": "true",
