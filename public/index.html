@@ -53,7 +53,7 @@
             <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
         </md-card-content>
     </md-card>
-    <md-card>
+    <md-card ng-if="procrastCtrl.activities.length > 0">
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">Recent Activity</span>

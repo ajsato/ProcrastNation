@@ -11,13 +11,11 @@
         this.duration = duration;
     }
 
-    //
     app.filter('fromNow', function () {
         return function (input) {
             return moment(parseInt(input)).fromNow();
         };
     });
-
 
     app.controller('procrastNationController',
         ["$firebaseArray", "$firebaseAuth", "$firebaseObject", "$mdDialog",
