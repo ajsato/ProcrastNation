@@ -4,7 +4,7 @@
     var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'googlechart']);
 
     app.controller('procrastNationController',
-        ["$firebaseArray", "$firebaseAuth", function ($firebaseArray, $firebaseAuth) {
+        ["$firebaseArray", "$firebaseAuth", function ($firebaseArray, $firebaseAuth, $scope) {
 
             var self = this;
 
@@ -41,7 +41,56 @@
                 notes: "Description"
             }];
 
-        }]);
-
-
+            this.dailyActivity = {};
+            this.dailyActivity.type = "google.charts.Line";
+            this.dailyActivity.displayed = false;
+            this.dailyActivity.data = {
+                "cols": [{
+                    id: "month",
+                    label: "Month",
+                    type: "string"
+                }, {
+                    id: "poms",
+                    label: "Poms",
+                    type: "number"
+                }],
+                "rows": [{
+                    c: [{
+                        v: "January"
+                    }, {
+                        v: 2,
+                        f: "23 items"
+                    }]
+                }, {
+                    c: [{
+                        v: "February"
+                    }, {
+                        v: 7
+                    }]
+                }, {
+                    c: [{
+                        v: "March"
+                    }, {
+                        v: 5
+                    }
+                    ]
+                }]
+            };
+            this.dailyActivity.options = {
+                "title": "Daily Activity",
+                "isStacked": "true",
+                "fill": 20,
+                "displayExactValues": true,
+                "vAxis": {
+                    "title": "Pomodoros",
+                    "gridlines": {
+                        "count": 2
+                    }
+                },
+                "hAxis": {
+                    "title": "Date"
+                }
+            };
+        }]
+    );
 })();
