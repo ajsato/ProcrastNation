@@ -9,6 +9,25 @@
     <link href="main.css" rel="stylesheet">
 </head>
 <body ng-controller="procrastNationController as procrastCtrl" ng-cloak>
+<md-card>
+    <md-input-container class="md-icon-float md-block">
+        <!-- Use floating label instead of placeholder -->
+        <label>Name</label>
+        <input ng-model="procrastCtrl.activity.title" type="text">
+    </md-input-container>
+    <md-input-container class="md-icon-float md-block">
+        <!-- Use floating label instead of placeholder -->
+        <label>Description</label>
+        <input ng-model="procrastCtrl.activity.message" type="text">
+    </md-input-container>
+    <md-input-container class="md-icon-float md-block">
+        <!-- Use floating label instead of placeholder -->
+        <label>Rating</label>
+        <input ng-model="procrastCtrl.activity.rating" type="text">
+    </md-input-container>
+    <md-button class="md-raised md-primary" ng-click="procrastCtrl.addActivity()">Save</md-button>
+</md-card>
+
 
 <md-card md-theme="default" md-theme-watch="">
     <md-card-title>
