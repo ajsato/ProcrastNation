@@ -9,16 +9,16 @@
     <link href="main.css" rel="stylesheet">
 </head>
 <body ng-controller="procrastNationController as procrastCtrl" ng-cloak>
-<md-toolbar layout="row" layout-align="space-between center">
-    <div class="md-toolbar-tools main-col">
-        <h3>
+<md-toolbar layout="row" layout-align="space-around center">
+    <div>
             <span>Procrast<b>Nation</b></span>
-        </h3>
-        <span flex></span>
+    </div>
+    <div>
+        Welcome {{procrastCtrl.firebaseUser.username}}
+    </div>
         <md-button aria-label="Leaderboard">
             Leaderboard
         </md-button>
-    </div>
 </md-toolbar>
 <div class="main-col">
     <md-card>
