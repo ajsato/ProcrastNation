@@ -55,6 +55,7 @@
                             }, function () {
                             });
                         } else {
+                            self.activities = self.firebaseUser.activities;
                             var days = [];
                             var startDate = Date.now();
                             var endDate = startDate.subtract(7, 'days');
@@ -67,7 +68,6 @@
                                     days[moment(self.firebaseUser.activities[i]).format()]++;
                                 }
                             }
-                            self.activities = self.firebaseUser.activities;
                         }
                     });
                 }).catch(function (error) {
