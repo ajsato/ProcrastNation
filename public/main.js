@@ -50,9 +50,14 @@
                         } else {
                             var days = [];
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
-                                days[moment(self.firebaseUser.activities[i]).format()]
+                                if (!days[moment(self.firebaseUser.activities[i]).format()]) {
+                                    days[moment(self.firebaseUser.activities[i]).format()] = 0;
+                                }
+                                else {
+                                    days[moment(self.firebaseUser.activities[i]).format()]++;
+                                }
                             }
-                            self.activities = self.firebaseUser.activities
+                            self.activities = self.firebaseUser.activities;
                         }
                     });
                 }).catch(function (error) {
@@ -66,7 +71,9 @@
                     self.firebaseUser.activities.push(new Activity(self.activity.title, self.activity.message, Date.now(),
                         self.activity.rating, 20));
                     self.firebaseUser.$save();
-                    self.activity.message = {};
+                    self.activity.title = "";
+                    self.activity.message = "";
+                    self.activity.rating = "";
                 };
 
 
@@ -94,7 +101,7 @@
                 }];
 
                 this.dailyActivity = {};
-                this.dailyActivity.type = "google.charts.Line";
+                this.dailyActivity.type = "google.charts.Bar";
                 this.dailyActivity.displayed = false;
                 this.dailyActivity.data = {
                     "cols": [{
@@ -103,7 +110,7 @@
                         type: "string"
                     }, {
                         id: "poms",
-                        label: "Poms",
+                        label: "Pomodoros",
                         type: "number"
                     }],
                     "rows": [{
