@@ -34,9 +34,6 @@
         <md-card-title-text>
             <span class="md-headline">Daily Progress</span>
         </md-card-title-text>
-        <md-card-title-media>
-            <div class="md-media-sm card-media"></div>
-        </md-card-title-media>
     </md-card-title>
     <md-card-content>
         <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
@@ -44,15 +41,20 @@
 </md-card>
 <md-content>
     <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Recent Activity</span>
+            </md-card-title-text>
+        </md-card-title>
         <md-card-content>
-            <h2>Recent Activity</h2>
             <md-list>
                 <md-list-item class="md-3-line"
-                              ng-repeat="item in procrastCtrl.activities">
+                              ng-repeat="activity in procrastCtrl.activities | orderBy: 'timestamp': true | limitTo: 5">
                     <div class="md-list-item-text">
-                        <h3>{{item.what}}</h3>
-                        <h4>{{item.when}}</h4>
-                        <p>{{item.notes}}</p>
+                        <h3>{{activity.name}}</h3>
+                        <h4>{{activity.description}}</h4>
+                        <p>{{activity.rating}}</p>
+                        <p>{{activity.timestamp | fromNow}}</p>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>

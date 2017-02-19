@@ -11,6 +11,12 @@
         this.duration = duration;
     }
 
+    app.filter('fromNow', function () {
+        return function (input) {
+            return moment(parseInt(input)).fromNow();
+        };
+    });
+
 
     app.controller('procrastNationController',
         ["$firebaseArray", "$firebaseAuth", "$firebaseObject", "$mdDialog",
@@ -52,7 +58,7 @@
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
                                 days[moment(self.firebaseUser.activities[i]).format()]
                             }
-                            self.activities = self.firebaseUser.activities
+                            self.activities = self.firebaseUser.activities;
                         }
                     });
                 }).catch(function (error) {
@@ -68,30 +74,6 @@
                     self.firebaseUser.$save();
                     self.activity.message = {};
                 };
-
-
-                //Create the recent activities
-                self.activities = [{
-                    what: "Activity 1",
-                    when: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    notes: "Description"
-                }, {
-                    what: 'Activity 2',
-                    when: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    notes: "Description"
-                }, {
-                    what: 'Activity 3',
-                    when: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    notes: "Description"
-                }, {
-                    what: 'Activity 4',
-                    when: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    notes: "Description"
-                }, {
-                    what: 'Activity 5',
-                    when: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    notes: "Description"
-                }];
 
                 this.dailyActivity = {};
                 this.dailyActivity.type = "google.charts.Line";
@@ -145,4 +127,6 @@
                 };
             }]
     );
+
+
 })();
