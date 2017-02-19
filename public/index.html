@@ -17,9 +17,6 @@
         <div>
             <span>Welcome {{procrastCtrl.firebaseUser.username}}!</span>
         </div>
-        <md-button aria-label="Leaderboard">
-            Leaderboard
-        </md-button>
     </div>
 </md-toolbar>
 <div class="main-col">
@@ -98,6 +95,24 @@
                         <h3>{{activity.title}} ({{activity.duration}} mins - {{activity.rating}} stars)</h3>
                         <h4>{{activity.message}}</h4>
                         <p>{{activity.timestamp | fromNow}}</p>
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Leaderboard</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <md-list>
+                <md-list-item class="md-3-line"
+                              ng-repeat="user in procrastCtrl.allUsers | orderBy: 'points': true">
+                    <div class="md-list-item-text">
+                        <h3>{{$index + 1}}. {{user.username}} - {{user.points}} pts</h3>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>

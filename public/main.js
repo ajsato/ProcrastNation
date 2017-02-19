@@ -43,6 +43,8 @@
                     $scope.$broadcast('timer-stop');
                 };
 
+                self.allUsers = $firebaseArray(firebase.database().ref());
+
                 auth.$signInWithPopup("google").then(function (result) {
 
                     self.firebaseUser = $firebaseObject(firebase.database().ref().child(result.user.uid));
@@ -116,6 +118,7 @@
                     }
                     self.firebaseUser.activities.push(new Activity(self.activity.title, self.activity.message, Date.now(),
                         self.activity.rating, self.currentTimer));
+                    self.firebaseUser.points = self.firebaseUser.points + 10;
                     self.firebaseUser.$save();
                     self.activity.title = "";
                     self.activity.message = "";
@@ -138,7 +141,7 @@
                     "rows": //self.daysFormatted/*
                         [
                             {
-                                c: [{v: "saturday"},
+                                c: [{v: "Saturday"},
                                     {
                                         v: 3
                                         //,f: "23 items"
