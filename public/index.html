@@ -71,16 +71,6 @@
             <md-button class="md-raised md-primary" ng-click="procrastCtrl.addActivity()">Save</md-button>
         </md-card-content>
     </md-card>
-    <md-card>
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">Daily Progress</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-            <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
-        </md-card-content>
-    </md-card>
     <md-card ng-show="procrastCtrl.activities.length > 0">
         <md-card-title>
             <md-card-title-text>
@@ -117,6 +107,16 @@
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
             </md-list>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Daily Progress</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div google-chart chart="{{procrastCtrl.dailyActivity}}"></div>
         </md-card-content>
     </md-card>
 </div>
