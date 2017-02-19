@@ -56,17 +56,36 @@
                             });
                         } else {
                             var days = [];
-                            var startDate = Date.now();
-                            var endDate = startDate.subtract(7, 'days');
-                            for (var h = 0; h < 7; h++){
-                                days[moment(startDate.add(h, 'days')).format()] = 0;
+                            var endDate = Date.now();
+                            var startDate = moment(startDate).subtract(7, 'days');
+                            // for (var h = 0; h < 7; h++){
+                            //     //days[moment(startDate.add(h, 'days')).format()] = 0;
+                            //     days.push({ c: [{v: moment(startDate).add(h,'days').format()},
+                            //         {v: 0}]});
+                            // }
+                            for (var i = 0; i < 7; i++){
+                                days[moment(startDate).add(i,'days').format()] = 0;
                             }
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
                                 if ((startDate < days[moment(self.firebaseUser.activities[i])]) &&
                                     (endDate > days[moment(self.firebaseUser.activities[i])])) {
+
                                     days[moment(self.firebaseUser.activities[i]).format()]++;
+
                                 }
                             }
+                            var daysFormatted = [];
+                            for (var x in days){
+                                daysFormatted.push({c: [{v: x},
+                                    {v: days[x]}]});
+                            }
+                            self.daysFormatted = daysFormatted;
+                            /*
+                               { c: [{v: "January"},
+                                    {v: 2
+                                        //,f: "23 items"
+                                    }]}
+                            */
                             self.activities = self.firebaseUser.activities;
                         }
                     });
@@ -85,42 +104,29 @@
                     self.activity.message = "";
                     self.activity.rating = "";
                 };
-
+  //  debugger;
                 this.dailyActivity = {};
                 this.dailyActivity.type = "google.charts.Bar";
                 this.dailyActivity.displayed = false;
                 this.dailyActivity.data = {
                     "cols": [{
-                        id: "month",
-                        label: "Month",
+                        id: "days",
+                        label: "Days",
                         type: "string"
                     }, {
                         id: "poms",
                         label: "Pomodoros",
                         type: "number"
                     }],
-                    "rows": [{
-                        c: [{
-                            v: "January"
-                        }, {
-                            v: 2,
-                            f: "23 items"
-                        }]
-                    }, {
-                        c: [{
-                            v: "February"
-                        }, {
-                            v: 7
-                        }]
-                    }, {
-                        c: [{
-                            v: "March"
-                        }, {
-                            v: 5
-                        }
-                        ]
-                    }]
+                    "rows": //self.daysFormatted/*
+                    [
+                       {c: [{v: "saturday"},
+                            {v: 3
+                                //,f: "23 items"
+                            }]}
+                        ]//*/
                 };
+              //  debugger;
                 this.dailyActivity.options = {
                     "title": "Daily Activity",
                     "isStacked": "true",
