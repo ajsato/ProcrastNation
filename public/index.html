@@ -51,8 +51,8 @@
                 <md-list-item class="md-3-line"
                               ng-repeat="activity in procrastCtrl.activities | orderBy: 'timestamp': true | limitTo: 5">
                     <div class="md-list-item-text">
-                        <h3>{{activity.name}}</h3>
-                        <h4>{{activity.description}}</h4>
+                        <h3>{{activity.title}} ({{activity.duration}} mins)</h3>
+                        <h4>{{activity.message}}</h4>
                         <p>{{activity.rating}}</p>
                         <p>{{activity.timestamp | fromNow}}</p>
                     </div>
