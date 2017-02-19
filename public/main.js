@@ -1,7 +1,7 @@
 (function () {
     firebase.initializeApp(config);
 
-    var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'googlechart']);
+    var app = angular.module('procrastNation', ['firebase', 'ngMaterial', 'googlechart', 'timer']);
 
     function Activity(title, message, timestamp, rating, duration) {
         this.title = title;
@@ -11,17 +11,15 @@
         this.duration = duration;
     }
 
-    //
     app.filter('fromNow', function () {
         return function (input) {
             return moment(parseInt(input)).fromNow();
         };
     });
 
-
     app.controller('procrastNationController',
-        ["$firebaseArray", "$firebaseAuth", "$firebaseObject", "$mdDialog",
-            function ($firebaseArray, $firebaseAuth, $firebaseObject, $mdDialog) {
+        ["$firebaseArray", "$firebaseAuth", "$firebaseObject", "$mdDialog", '$scope',
+            function ($firebaseArray, $firebaseAuth, $firebaseObject, $mdDialog, $scope) {
 
                 var self = this;
 
@@ -29,6 +27,21 @@
                 var auth = $firebaseAuth();
                 self.activity = {};
                 self.activities = [];
+                self.currentTimer = 20;
+                self.currentTimerSec = 0;
+                self.currentSeconds = 0;
+                self.timerRunning = false;
+
+
+                self.startTimer = function () {
+                    self.timerRunning = true;
+                    $scope.$broadcast('timer-start');
+                };
+
+                self.stopTimer = function () {
+                    self.timerRunning = false;
+                    $scope.$broadcast('timer-stop');
+                };
 
                 auth.$signInWithPopup("google").then(function (result) {
 
@@ -63,8 +76,8 @@
                             //     days.push({ c: [{v: moment(startDate).add(h,'days').format()},
                             //         {v: 0}]});
                             // }
-                            for (var i = 0; i < 7; i++){
-                                days[moment(startDate).add(i,'days').format()] = 0;
+                            for (var i = 0; i < 7; i++) {
+                                days[moment(startDate).add(i, 'days').format()] = 0;
                             }
                             for (var i = 0; i < self.firebaseUser.activities.length; i++) {
                                 if ((startDate < days[moment(self.firebaseUser.activities[i])]) &&
@@ -73,17 +86,19 @@
                                 }
                             }
                             var daysFormatted = [];
-                            for (var x in days){
-                                daysFormatted.push({c: [{v: x},
-                                    {v: days[x]}]});
+                            for (var x in days) {
+                                daysFormatted.push({
+                                    c: [{v: x},
+                                        {v: days[x]}]
+                                });
                             }
                             self.daysFormatted = daysFormatted;
                             /*
-                               { c: [{v: "January"},
-                                    {v: 2
-                                        //,f: "23 items"
-                                    }]}
-                            */
+                             { c: [{v: "January"},
+                             {v: 2
+                             //,f: "23 items"
+                             }]}
+                             */
                             self.activities = self.firebaseUser.activities;
                         }
                     });
@@ -91,12 +106,16 @@
                     console.error("Authentication failed:", error);
                 });
 
+                self.updateSeconds = function () {
+                    self.currentSeconds = self.currentTimer * 60 + self.currentTimerSec;
+                };
+
                 self.addActivity = function () {
                     if (!self.firebaseUser.activities) {
                         self.firebaseUser.activities = [];
                     }
                     self.firebaseUser.activities.push(new Activity(self.activity.title, self.activity.message, Date.now(),
-                        self.activity.rating, 20));
+                        self.activity.rating, self.currentTimer));
                     self.firebaseUser.$save();
                     self.activity.title = "";
                     self.activity.message = "";
@@ -117,11 +136,14 @@
                         type: "number"
                     }],
                     "rows": //self.daysFormatted/*
-                    [
-                       {c: [{v: "saturday"},
-                            {v: 3
-                                //,f: "23 items"
-                            }]}
+                        [
+                            {
+                                c: [{v: "saturday"},
+                                    {
+                                        v: 3
+                                        //,f: "23 items"
+                                    }]
+                            }
                         ]//*/
                 };
                 this.dailyActivity.options = {

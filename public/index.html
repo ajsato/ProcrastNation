@@ -9,25 +9,54 @@
     <link href="main.css" rel="stylesheet">
 </head>
 <body ng-controller="procrastNationController as procrastCtrl" ng-cloak>
-<md-toolbar layout="row" layout-align="space-around center">
-    <div>
+<md-toolbar>
+    <div layout="row" layout-align="space-between center" class="header-col">
+        <div>
             <span>Procrast<b>Nation</b></span>
-    </div>
-    <div>
-        Welcome {{procrastCtrl.firebaseUser.username}}
-    </div>
+        </div>
+        <div>
+            <span>Welcome {{procrastCtrl.firebaseUser.username}}!</span>
+        </div>
         <md-button aria-label="Leaderboard">
             Leaderboard
         </md-button>
+    </div>
 </md-toolbar>
 <div class="main-col">
     <md-card>
         <md-card-title>
             <md-card-title-text>
-                <span class="md-headline">Add Activity</span>
+                <span class="md-headline">New Pomodoro</span>
             </md-card-title-text>
         </md-card-title>
         <md-card-content>
+            <timer interval="1000" countdown="procrastCtrl.currentSeconds" autostart="procrastCtrl.startTimer"
+                   class="center-content" layout="column"
+                   layout-align="center center">
+                <div ng-show="procrastCtrl.timerRunning">
+                    <div>
+                        <md-progress-circular md-mode="determinate"
+                                              value="{{(progressBar)? progressBar : 100}}"></md-progress-circular>
+                    </div>
+                    <div>
+                        <span ng-show="hours!=0">{{hours}} : </span>{{mminutes}} : {{sseconds}} remaining
+                        <md-button class="md-warn" ng-click="procrastCtrl.stopTimer()">Stop</md-button>
+                    </div>
+                </div>
+                <div ng-show="!procrastCtrl.timerRunning">
+                    <md-input-container>
+                        <label>Minutes</label>
+                        <input type="number" ng-model="procrastCtrl.currentTimer"
+                               ng-change="procrastCtrl.updateSeconds()">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Seconds</label>
+                        <input type="number" ng-model="procrastCtrl.currentTimerSec"
+                               ng-change="procrastCtrl.updateSeconds()">
+                    </md-input-container>
+                    <md-button class="md-raised md-primary" ng-click="procrastCtrl.startTimer()">Start</md-button>
+                </div>
+            </timer>
             <md-input-container class="md-icon-float md-block">
                 <label>Name of activity</label>
                 <input ng-model="procrastCtrl.activity.title" type="text">
@@ -36,10 +65,12 @@
                 <label>Description</label>
                 <input ng-model="procrastCtrl.activity.message" type="text">
             </md-input-container>
-            <md-input-container class="md-icon-float md-block">
-                <label>Rating</label>
-                <input ng-model="procrastCtrl.activity.rating" type="text">
-            </md-input-container>
+            <md-slider-container>
+                <span>Rating</span>
+                <md-slider flex min="0" max="5" ng-model="procrastCtrl.activity.rating" aria-label="rating">
+                </md-slider>
+            </md-slider-container>
+
             <md-button class="md-raised md-primary" ng-click="procrastCtrl.addActivity()">Save</md-button>
         </md-card-content>
     </md-card>
@@ -78,6 +109,9 @@
 <script src="node_modules/firebase/firebase.js"></script>
 <script src="node_modules/angularfire/dist/angularfire.min.js"></script>
 <script src="node_modules/moment/moment.js"></script>
+<script src="node_modules/moment/min/locales.min.js"></script>
+<script src="node_modules/angular-timer/bower_components/humanize-duration/humanize-duration.js"></script>
+<script src="node_modules/angular-timer/dist/angular-timer.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
